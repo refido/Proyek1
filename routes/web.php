@@ -14,6 +14,13 @@ use App\Http\Controllers\LanguageController;
 
 Auth::routes(['verify' => true]);
 
+// <---------------------------- MY ROUTES ------------------------>
+Route::resources([
+  'admin/field' => 'Admin\FieldController'
+]);
+// <---------------------------- MY ROUTES ------------------------>
+
+
 // Main Page Route
 Route::get('/', 'DashboardController@dashboardEcommerce')->name('dashboard-ecommerce');
 

@@ -2,7 +2,6 @@
 .jq-ry-container:not(.multi-color-ratings) .jq-ry-normal-group svg {
   fill: #babfc7;
 }
-
 .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group i,
 .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg {
   fill: #ff9f43;
@@ -17,14 +16,11 @@
 [data-textdirection=rtl] .jq-ry-container:not(.multi-color-ratings) .jq-ry-normal-group svg {
   fill: #ff9f43;
 }
-
 [data-textdirection=rtl] .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group i,
 [data-textdirection=rtl] .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg {
   fill: #babfc7;
 }
-
 [data-textdirection=rtl] .dark-layout .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group i,
 [data-textdirection=rtl] .dark-layout .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg {
   fill: #676d7d;
 }
-

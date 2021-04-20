@@ -5,7 +5,6 @@ body.vertical-layout.vertical-menu-modern .horizontal-menu-wrapper {
 .horizontal-menu > .main-menu {
   display: none;
 }
-
 .horizontal-menu .fixed-top {
   left: 0;
 }
@@ -21,4 +20,3 @@ html body.navbar-static .app-content .header-navbar {
     margin-right: 1.2rem;
   }
 }
-

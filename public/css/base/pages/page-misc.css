@@ -6,12 +6,10 @@
   align-items: center;
   justify-content: center;
 }
-
 .misc-wrapper .misc-inner {
   position: relative;
   max-width: 750px;
 }
-
 .misc-wrapper .brand-logo {
   display: flex;
   justify-content: center;
@@ -20,8 +18,6 @@
   left: 2rem;
   margin: 0;
 }
-
 .misc-wrapper .brand-logo .brand-text {
   font-weight: 600;
 }
-

@@ -1,5 +1,4 @@
 /* Set dropdown font-families */
-
 .ql-toolbar .ql-font span[data-label="Sailec Light"]::before {
   font-family: "Sailec Light";
 }
@@ -25,7 +24,6 @@
 }
 
 /* Set content font-families */
-
 .ql-font-sofia {
   font-family: "Sofia";
 }
@@ -49,46 +47,35 @@
 .ql-toolbar {
   border-color: #d8d6de !important;
 }
-
 .ql-toolbar .ql-formats:focus,
 .ql-toolbar .ql-formats *:focus {
   outline: 0;
 }
-
-.ql-toolbar .ql-formats .ql-picker-label:hover,
-.ql-toolbar .ql-formats .ql-picker-label:focus,
+.ql-toolbar .ql-formats .ql-picker-label:hover, .ql-toolbar .ql-formats .ql-picker-label:focus,
 .ql-toolbar .ql-formats button:hover,
 .ql-toolbar .ql-formats button:focus {
   color: #7367f0 !important;
 }
-
-.ql-toolbar .ql-formats .ql-picker-label:hover .ql-stroke,
-.ql-toolbar .ql-formats .ql-picker-label:focus .ql-stroke,
+.ql-toolbar .ql-formats .ql-picker-label:hover .ql-stroke, .ql-toolbar .ql-formats .ql-picker-label:focus .ql-stroke,
 .ql-toolbar .ql-formats button:hover .ql-stroke,
 .ql-toolbar .ql-formats button:focus .ql-stroke {
   stroke: #7367f0 !important;
 }
-
-.ql-toolbar .ql-formats .ql-picker-label:hover .ql-fill,
-.ql-toolbar .ql-formats .ql-picker-label:focus .ql-fill,
+.ql-toolbar .ql-formats .ql-picker-label:hover .ql-fill, .ql-toolbar .ql-formats .ql-picker-label:focus .ql-fill,
 .ql-toolbar .ql-formats button:hover .ql-fill,
 .ql-toolbar .ql-formats button:focus .ql-fill {
   fill: #7367f0 !important;
 }
-
 .ql-toolbar .ql-formats .ql-picker-label.ql-active,
 .ql-toolbar .ql-formats button.ql-active {
   color: #7367f0 !important;
 }
-
 .ql-toolbar .ql-formats .ql-picker-item.ql-selected {
   color: #7367f0 !important;
 }
-
 .ql-toolbar .ql-formats .ql-picker-options .ql-picker-item:hover {
   color: #7367f0 !important;
 }
-
 .ql-toolbar .ql-formats .ql-picker-options .ql-active {
   color: #7367f0 !important;
 }
@@ -96,11 +83,9 @@
 .ql-bubble .ql-picker {
   color: #fff !important;
 }
-
 .ql-bubble .ql-stroke {
   stroke: #fff !important;
 }
-
 .ql-bubble .ql-fill {
   fill: #fff !important;
 }
@@ -136,8 +121,7 @@
   border-top-left-radius: 0.357rem;
 }
 
-.ql-toolbar + .ql-container,
-.ql-container + .ql-toolbar {
+.ql-toolbar + .ql-container, .ql-container + .ql-toolbar {
   border-bottom-right-radius: 0.357rem;
   border-bottom-left-radius: 0.357rem;
   border-top-right-radius: unset;
@@ -149,50 +133,41 @@
   background-color: #283046;
   border-color: #3b4253 !important;
 }
-
 .dark-layout .quill-toolbar .ql-picker,
 .dark-layout .ql-toolbar .ql-picker {
   color: #fff !important;
 }
-
 .dark-layout .quill-toolbar .ql-stroke,
 .dark-layout .ql-toolbar .ql-stroke {
   stroke: #fff !important;
 }
-
 .dark-layout .quill-toolbar .ql-fill,
 .dark-layout .ql-toolbar .ql-fill {
   fill: #fff !important;
 }
-
 .dark-layout .quill-toolbar .ql-picker-options,
 .dark-layout .quill-toolbar .ql-picker-label,
 .dark-layout .ql-toolbar .ql-picker-options,
 .dark-layout .ql-toolbar .ql-picker-label {
   background-color: #283046;
 }
-
 .dark-layout .quill-toolbar .ql-picker-options .ql-active,
 .dark-layout .quill-toolbar .ql-picker-label .ql-active,
 .dark-layout .ql-toolbar .ql-picker-options .ql-active,
 .dark-layout .ql-toolbar .ql-picker-label .ql-active {
   color: #7367f0 !important;
 }
-
 .dark-layout .ql-bubble .ql-toolbar {
   background: #3b4253;
   border-radius: 2rem;
 }
-
 .dark-layout .ql-container {
   border-color: #3b4253 !important;
   background-color: #283046;
 }
-
 .dark-layout .ql-editor .ql-syntax {
   background-color: #161d31;
 }
-
 .dark-layout .ql-editor.ql-blank:before {
   color: #b4b7bd;
 }
@@ -202,4 +177,3 @@
   left: auto !important;
   right: 0;
 }
-

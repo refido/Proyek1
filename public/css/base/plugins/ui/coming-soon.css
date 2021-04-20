@@ -7,7 +7,6 @@
     content: "xs - min-width: 0px";
   }
 }
-
 @media screen and (min-width: 544px) {
   head {
     font-family: "sm 544px";
@@ -17,7 +16,6 @@
     content: "sm - min-width: 544px";
   }
 }
-
 @media screen and (min-width: 768px) {
   head {
     font-family: "md 768px";
@@ -27,7 +25,6 @@
     content: "md - min-width: 768px";
   }
 }
-
 @media screen and (min-width: 992px) {
   head {
     font-family: "lg 992px";
@@ -37,7 +34,6 @@
     content: "lg - min-width: 992px";
   }
 }
-
 @media screen and (min-width: 1200px) {
   head {
     font-family: "xl 1200px";
@@ -47,11 +43,9 @@
     content: "xl - min-width: 1200px";
   }
 }
-
 head {
   clear: both;
 }
-
 head title {
   font-family: "xs 0px, sm 544px, md 768px, lg 992px, xl 1200px";
 }
@@ -63,4 +57,3 @@ body:after {
 *[data-usn-if] {
   display: none;
 }
-

@@ -4,7 +4,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .blog-list-wrapper .blog-content-truncate {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -20,11 +19,9 @@
   -o-object-fit: cover;
      object-fit: cover;
 }
-
 .blog-sidebar .blog-recent-posts .text-body-heading:hover {
   color: #5e50ee !important;
 }
-
 .blog-sidebar .blog-recent-post-title,
 .blog-sidebar .blog-category-title {
   line-height: 23px;
@@ -34,4 +31,3 @@
 .blog-edit-wrapper .border {
   border-color: #d8d6de !important;
 }
-

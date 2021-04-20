@@ -2,7 +2,6 @@
   cursor: -webkit-grab;
   cursor: grab;
 }
-
 .gu-unselectable .draggable {
   cursor: -webkit-grabbing;
   cursor: grabbing;
@@ -16,7 +15,6 @@
 #dd-with-handle .list-group {
   min-height: 5.714rem;
 }
-
 #dd-with-handle .list-group .handle {
   padding: 0 5px;
   margin-right: 5px;
@@ -38,4 +36,3 @@
   border-color: #3b4253;
   box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.24);
 }
-

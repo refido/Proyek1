@@ -2,7 +2,6 @@
   background-size: cover;
   background-color: rgba(115, 103, 240, 0.12) !important;
 }
-
 .knowledge-base-bg .kb-search-input .input-group:focus-within {
   box-shadow: none;
 }
@@ -10,7 +9,6 @@
 .kb-search-content-info .kb-search-content .card-img-top {
   background-color: #fcfcfc;
 }
-
 .kb-search-content-info .no-result.no-items {
   display: none;
 }
@@ -26,16 +24,13 @@
     margin: 0 auto;
   }
 }
-
 @media (min-width: 992px) {
   .knowledge-base-bg .card-body {
     padding: 8rem;
   }
 }
-
 @media (min-width: 768px) and (max-width: 991.98px) {
   .knowledge-base-bg .card-body {
     padding: 6rem;
   }
 }
-

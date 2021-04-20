@@ -4,7 +4,6 @@
   box-shadow: none;
   border-radius: 1rem;
 }
-
 .noUi-target.noUi-connect {
   box-shadow: none;
 }
@@ -12,7 +11,6 @@
 .noUi-horizontal {
   height: 6px;
 }
-
 .noUi-horizontal .noUi-handle {
   width: 1rem;
   height: 1rem;
@@ -20,7 +18,6 @@
   right: -0.8571428571rem;
   top: -4px;
 }
-
 .noUi-horizontal .noUi-tooltip {
   bottom: 135% !important;
 }
@@ -49,9 +46,7 @@
   background: #fff;
   border: 2px solid #7367f0;
 }
-
-.noUi-handle:after,
-.noUi-handle:before {
+.noUi-handle:after, .noUi-handle:before {
   display: none;
 }
 
@@ -74,18 +69,15 @@
   display: inline-block;
   width: 6px;
 }
-
 .noUi-vertical .noUi-origin {
   right: auto;
 }
-
 .noUi-vertical .noUi-handle {
   width: 1rem;
   height: 1rem;
   top: -0.375rem;
   left: -0.3rem;
 }
-
 .noUi-vertical .noUi-tooltip {
   right: 135% !important;
 }
@@ -110,17 +102,14 @@ _:-ms-lang(x),
 .dark-layout .noUi-handle {
   background-color: #283046;
 }
-
 .dark-layout .noUi-tooltip {
   background-color: #161d31;
   color: #b4b7bd;
 }
-
 .dark-layout .noUi-pips,
 .dark-layout .noUi-value {
   color: #b4b7bd;
 }
-
 .dark-layout .noUi-marker {
   background: #3b4253;
 }
@@ -128,8 +117,6 @@ _:-ms-lang(x),
 [data-textdirection=rtl] .noUi-txt-dir-rtl.noUi-horizontal .noUi-origin {
   right: auto;
 }
-
 [data-textdirection=rtl] .noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
   left: -3px;
 }
-
