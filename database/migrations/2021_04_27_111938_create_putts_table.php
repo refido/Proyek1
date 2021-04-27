@@ -15,6 +15,10 @@ class CreatePuttsTable extends Migration
     {
         Schema::create('putts', function (Blueprint $table) {
             $table->id();
+            $table->integer('score_id');
+            for ($i = 1; $i <= 18; $i++) {
+                $table->integer("putt_hole_" . $i)->default(null)->nullable();
+            }
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class CreateSandSavesTable extends Migration
     {
         Schema::create('sand_saves', function (Blueprint $table) {
             $table->id();
+            $table->integer('score_id');
+            for ($i = 1; $i <= 18; $i++) {
+                $table->boolean("sand_save_hole_".$i)->default(null)->nullable();
+            }
             $table->timestamps();
         });
     }

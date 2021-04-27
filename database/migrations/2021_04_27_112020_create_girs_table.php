@@ -15,6 +15,10 @@ class CreateGirsTable extends Migration
     {
         Schema::create('girs', function (Blueprint $table) {
             $table->id();
+            $table->integer('score_id');
+            for ($i = 1; $i <= 18; $i++) {
+                $table->boolean("gir_hole_".$i)->default(null)->nullable();
+            }
             $table->timestamps();
         });
     }

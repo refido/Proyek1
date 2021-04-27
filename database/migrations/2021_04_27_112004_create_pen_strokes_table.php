@@ -15,6 +15,10 @@ class CreatePenStrokesTable extends Migration
     {
         Schema::create('pen_strokes', function (Blueprint $table) {
             $table->id();
+            $table->integer('score_id');
+            for ($i = 1; $i <= 18; $i++) {
+                $table->integer("pen_stroke_hole_".$i)->default(null)->nullable();
+            }
             $table->timestamps();
         });
     }
