@@ -60,7 +60,11 @@ class ScoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
+        return view('/user/score/edit', [
+            'breadcrumbs' => $breadcrumbs,
+            
+        ]);
     }
 
     /**
