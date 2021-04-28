@@ -21,6 +21,9 @@ Route::resources([
 Route::resources([
   'admin/event' => 'Admin\EventController'
 ]);
+Route::resources([  
+  'user/score' => 'User\ScoreController'
+]);
 // Route Admin
 Route::get('admin/event/{score_code}/detail_score', 'Admin\EventController@detail_score');
 Route::get('admin/event/{event_code}/manage_participant', 'Admin\EventController@manage_participant');
