@@ -18,6 +18,9 @@ Auth::routes(['verify' => true]);
 Route::resources([
   'admin/field' => 'Admin\FieldController'
 ]);
+Route::resources([
+  'user/score' => 'User\ScoreController'
+]);
 // <---------------------------- MY ROUTES ------------------------>
 
 
