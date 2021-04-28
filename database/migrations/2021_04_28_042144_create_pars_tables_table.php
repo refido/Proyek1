@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCreateParsTablesTable extends Migration
+class CreateParsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateCreateParsTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('create_pars_tables', function (Blueprint $table) {
+        Schema::create('pars', function (Blueprint $table) {
             $table->id();
+            $table->string('field_code');
+            for ($i = 1; $i <= 18; $i++) {
+                $table->integer("hole_".$i)->default(null);
+            }
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateCreateParsTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('create_pars_tables');
+        Schema::dropIfExists('pars');
     }
 }
