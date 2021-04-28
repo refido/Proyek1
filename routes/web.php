@@ -18,6 +18,15 @@ Auth::routes(['verify' => true]);
 Route::resources([
   'admin/field' => 'Admin\FieldController'
 ]);
+Route::resources([
+  'admin/event' => 'Admin\EventController'
+]);
+// Route Admin
+Route::get('admin/event/{score_code}/detail_score', 'Admin\EventController@detail_score');
+Route::get('admin/event/{event_code}/manage_participant', 'Admin\EventController@manage_participant');
+Route::get('admin/event/{event_code}/manage_score', 'Admin\EventController@manage_score');
+Route::post('admin/event/manage_participant', 'Admin\EventController@update_participant');
+Route::post('admin/event/update_score', 'Admin\EventController@update_score');
 // <---------------------------- MY ROUTES ------------------------>
 
 
