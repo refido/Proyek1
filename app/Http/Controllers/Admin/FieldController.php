@@ -15,9 +15,11 @@ class FieldController extends Controller
      */
     public function index()
     {
-        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "#", 'name' => "Field"], ['name' => "List"]];
+        $data = \App\Field::all();
+        $breadcrumbs = [['link' => "/admin", 'name' => "Home"], ['link' => "/admin/field", 'name' => "Field"], ['name' => "List"]];
         return view('/admin/field/index', [
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'data' => $data
         ]);
     }
 
@@ -28,7 +30,7 @@ class FieldController extends Controller
      */
     public function create()
     {
-        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "#", 'name' => "Field"], ['name' => "Create"]];
+        $breadcrumbs = [['link' => "/admin", 'name' => "Home"], ['link' => "/admin/field", 'name' => "Field"], ['name' => "Create"]];
         return view('/admin/field/create', [
             'breadcrumbs' => $breadcrumbs
         ]);
@@ -42,7 +44,39 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $user = Auth::guard('admin')->user();
+
+        $waktu = date('ymdhis');
+        $data = new \App\Field;
+        $code = 'FL_' . $waktu;
+        $name_file = $waktu . '_' . $request->file('image')->getClientOriginalName();
+
+        $data->field_code =  $code;
+        $data->field_name = $request->field_name;
+        $data->address = $request->address;
+        // $data->id_admin = $user->id;
+        $data->image = $name_file;
+
+        $data->save();
+
+        $data_par = new \App\Par;
+        //Hole input
+        for ($i = 1; $i <= 18; $i++) {
+            $data_par->{"hole_" . $i} = $request->{"hole_" . $i};
+        }
+        $data_par->field_code =  $code;
+        $data_par->save();
+
+        $request->file('image')->storeAs(
+            'masterImages',
+            $name_file,
+            'public'
+        );
+        $notification = array(
+            'message' => 'Insert Field Success!',
+            'alert-type' => 'success'
+        );
+        return redirect('/admin/field')->with($notification);
     }
 
     /**
@@ -87,6 +121,9 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        //
+        $bawa = Field::where('id',$field->id)->first();
+        Storage::disk('public')->delete('masterImages/' . $bawa->image);
+        $field->delete();
+        return;
     }
 }
