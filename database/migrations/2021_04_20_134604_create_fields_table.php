@@ -15,6 +15,10 @@ class CreateFieldsTable extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->string('field_code');
+            $table->string('field_name');
+            $table->string('address');
+            $table->string('image');
             $table->timestamps();
         });
     }
