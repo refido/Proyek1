@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Score;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ScoreController extends Controller
 {
@@ -18,7 +20,8 @@ class ScoreController extends Controller
         $check =  DB::table('scores')
             ->where('scores.join_status', '=', 'accepted')
             // ID MIDDLEWWARE USER
-            ->where('scores.user_id', '=', Auth::id())
+            //SOALNYA BELUM ADA AUTH
+            // ->where('scores.user_id', '=', Auth::id())
             ->first();
 
         $data = DB::table('scores')
@@ -27,7 +30,9 @@ class ScoreController extends Controller
             ->join('fields', 'fields.id', '=', 'events.field_id')
             ->where('scores.join_status', '=', 'accepted')
             // ID MIDDLEWWARE USER
-            ->where('scores.user_id', '=', Auth::id())
+            //SOALNYA BELUM ADA AUTH
+            // ->where('scores.user_id', '=', Auth::id())
+            // ->where('scores.user_id', '=', Auth::id())
             ->orderByDesc('scores.id')
             ->get();
 

@@ -24,6 +24,7 @@ Route::resources([
 Route::resources([  
   'user/score' => 'User\ScoreController'
 ]);
+Route::post('user/score/update_score', 'User\ScoreController@update_score');
 // Route Admin
 Route::get('admin/event/{score_code}/detail_score', 'Admin\EventController@detail_score');
 Route::get('admin/event/{event_code}/manage_participant', 'Admin\EventController@manage_participant');
