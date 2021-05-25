@@ -136,11 +136,22 @@ class ScoreController extends Controller
 
         $lubang = $request->hole_temp;
 
-        
+        $data_str->{"strokes_hole_$lubang"} = $request->total_stroke;
+        $data_pt->{"putt_hole_$lubang"} = $request->putt;
+        $data_fwy->{"fwies_hole_$lubang"} = $request->fhy;
+        $data_gir->{"gir_hole_$lubang"} = $request->gir;
+        $data_ps->{"pen_stroke_hole_$lubang"} = $request->pen_stroke;
+        $data_ss->{"sand_save_hole_$lubang"} = $request->ss;
 
         $data_score->{"score_hole_$lubang"} = $request->total_stroke - $request->par_temp;
 
-        
+        $data_str->save();
+        $data_pt->save();
+        $data_fwy->save();
+        $data_gir->save();
+        $data_ps->save();
+        $data_ss->save();
+        $data_score->save();
     }
     /**
      * Remove the specified resource from storage.
