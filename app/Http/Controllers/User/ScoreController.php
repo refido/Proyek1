@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Score;
 
 class ScoreController extends Controller
 {
@@ -76,12 +77,39 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Score $score)
     {
+        $data = DB::table('scores')
+            ->select(
+                'scores.id as score_id',
+                'scores.*',
+                'strokes.*',
+                'putts.*',
+                'pen_strokes.*',
+                'girs.*',
+                'fwies.*',
+                'sand_saves.*',
+                'events.hole_type',
+                'fields.*',
+                'pars.*'
+            )
+            ->join('strokes', 'strokes.score_id', '=', 'scores.id')
+            ->join('putts', 'putts.score_id', '=', 'scores.id')
+            ->join('pen_strokes', 'pen_strokes.score_id', '=', 'scores.id')
+            ->join('girs', 'girs.score_id', '=', 'scores.id')
+            ->join('fwies', 'fwies.score_id', '=', 'scores.id')
+            ->join('sand_saves', 'sand_saves.score_id', '=', 'scores.id')
+            // FIELD DETAILD
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->where('scores.score_code', '=', $score->score_code)
+            ->orderByDesc('scores.id')
+            ->first();
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
         return view('/user/score/edit', [
             'breadcrumbs' => $breadcrumbs,
-
+            'data' => $data
         ]);
     }
 

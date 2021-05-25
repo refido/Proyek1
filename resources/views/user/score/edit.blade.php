@@ -30,18 +30,32 @@
                     </thead>
                     <tbody>
                         <?php
-                        $dari=1;
-                        $sampai=18;
-                        ?>
+                        $dari=0;
+                        $sampai=0;
+                            if($data->hole_type=='19'){
+                                $dari=1;
+                                $sampai=9;
+                            }elseif ($data->hole_type=='1018') {
+                                $dari=10;
+                                $sampai=18;
+                            }elseif ($data->hole_type=='18') {
+                                $dari=1;
+                                $sampai=18;
+                            }
+                            ?>
                         @for ($i = $dari; $i <= $sampai; $i++) <tr>
                             <td>
                                 <h1 class="display-5">{{ $i }}</h1>
                             </td>
                             <td>
-                                <h1 class="display-5">{{ $i }}</h1>
+                                <input type="hidden" id="{{$i}}" value="{{ $data->{"hole_$i"} }}">
+                                <h1 class="display-5">{{ $data->{"hole_$i"} }}</h1>
                             </td>
-                            <td>
-
+                            <td id="skor_show_{{$i}}" class="popup-skor"
+                                onclick="click_skor({{$data->score_id}},{{$i}},{{ $data->{"hole_$i"} }})">
+                                <h1 class="display-5">
+                                    <?php if($data->{"score_hole_$i"}>0){ echo '+';} ?>{{ $data->{"score_hole_$i"} }}
+                                </h1>
                             </td>
                             </tr>
                             @endfor
