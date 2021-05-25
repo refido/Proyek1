@@ -14,9 +14,27 @@ class ScoreController extends Controller
      */
     public function index()
     {
+        $check =  DB::table('scores')
+            ->where('scores.join_status', '=', 'accepted')
+            // ID MIDDLEWWARE USER
+            ->where('scores.user_id', '=', Auth::id())
+            ->first();
+
+        $data = DB::table('scores')
+            ->select('scores.id as score_id', 'scores.*', 'events.*', 'fields.*')
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->where('scores.join_status', '=', 'accepted')
+            // ID MIDDLEWWARE USER
+            ->where('scores.user_id', '=', Auth::id())
+            ->orderByDesc('scores.id')
+            ->get();
+
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "List Score"]];
         return view('/user/score/index', [
             'breadcrumbs' => $breadcrumbs,
+            'data' => $data,
+            'check' => $check
         ]);
     }
 
@@ -63,7 +81,7 @@ class ScoreController extends Controller
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
         return view('/user/score/edit', [
             'breadcrumbs' => $breadcrumbs,
-            
+
         ]);
     }
 
