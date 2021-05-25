@@ -124,7 +124,24 @@ class ScoreController extends Controller
     {
         //
     }
+    public function update_score(Request $request)
+    {
+        $data_str = \App\Stroke::where('score_id', $request->score_id)->first();
+        $data_pt = \App\Putt::where('score_id', $request->score_id)->first();
+        $data_fwy = \App\Fwy::where('score_id', $request->score_id)->first();
+        $data_gir = \App\Gir::where('score_id', $request->score_id)->first();
+        $data_ps = \App\PenStroke::where('score_id', $request->score_id)->first();
+        $data_ss = \App\SandSave::where('score_id', $request->score_id)->first();
+        $data_score = \App\Score::where('id', $request->score_id)->first();
 
+        $lubang = $request->hole_temp;
+
+        
+
+        $data_score->{"score_hole_$lubang"} = $request->total_stroke - $request->par_temp;
+
+        
+    }
     /**
      * Remove the specified resource from storage.
      *
