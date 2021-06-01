@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Score;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ScoreController extends Controller
 {
@@ -14,9 +17,30 @@ class ScoreController extends Controller
      */
     public function index()
     {
+        $check =  DB::table('scores')
+            ->where('scores.join_status', '=', 'accepted')
+            // ID MIDDLEWWARE USER
+            //SOALNYA BELUM ADA AUTH
+            // ->where('scores.user_id', '=', Auth::id())
+            ->first();
+
+        $data = DB::table('scores')
+            ->select('scores.id as score_id', 'scores.*', 'events.*', 'fields.*')
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->where('scores.join_status', '=', 'accepted')
+            // ID MIDDLEWWARE USER
+            //SOALNYA BELUM ADA AUTH
+            // ->where('scores.user_id', '=', Auth::id())
+            // ->where('scores.user_id', '=', Auth::id())
+            ->orderByDesc('scores.id')
+            ->get();
+
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "List Score"]];
         return view('/user/score/index', [
             'breadcrumbs' => $breadcrumbs,
+            'data' => $data,
+            'check' => $check
         ]);
     }
 
@@ -58,12 +82,39 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Score $score)
     {
+        $data = DB::table('scores')
+            ->select(
+                'scores.id as score_id',
+                'scores.*',
+                'strokes.*',
+                'putts.*',
+                'pen_strokes.*',
+                'girs.*',
+                'fwies.*',
+                'sand_saves.*',
+                'events.hole_type',
+                'fields.*',
+                'pars.*'
+            )
+            ->join('strokes', 'strokes.score_id', '=', 'scores.id')
+            ->join('putts', 'putts.score_id', '=', 'scores.id')
+            ->join('pen_strokes', 'pen_strokes.score_id', '=', 'scores.id')
+            ->join('girs', 'girs.score_id', '=', 'scores.id')
+            ->join('fwies', 'fwies.score_id', '=', 'scores.id')
+            ->join('sand_saves', 'sand_saves.score_id', '=', 'scores.id')
+            // FIELD DETAILD
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->where('scores.score_code', '=', $score->score_code)
+            ->orderByDesc('scores.id')
+            ->first();
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
         return view('/user/score/edit', [
             'breadcrumbs' => $breadcrumbs,
-            
+            'data' => $data
         ]);
     }
 
@@ -78,7 +129,35 @@ class ScoreController extends Controller
     {
         //
     }
+    public function update_score(Request $request)
+    {
+        $data_str = \App\Stroke::where('score_id', $request->score_id)->first();
+        $data_pt = \App\Putt::where('score_id', $request->score_id)->first();
+        $data_fwy = \App\Fwy::where('score_id', $request->score_id)->first();
+        $data_gir = \App\Gir::where('score_id', $request->score_id)->first();
+        $data_ps = \App\PenStroke::where('score_id', $request->score_id)->first();
+        $data_ss = \App\SandSave::where('score_id', $request->score_id)->first();
+        $data_score = \App\Score::where('id', $request->score_id)->first();
 
+        $lubang = $request->hole_temp;
+
+        $data_str->{"strokes_hole_$lubang"} = $request->total_stroke;
+        $data_pt->{"putt_hole_$lubang"} = $request->putt;
+        $data_fwy->{"fwies_hole_$lubang"} = $request->fhy;
+        $data_gir->{"gir_hole_$lubang"} = $request->gir;
+        $data_ps->{"pen_stroke_hole_$lubang"} = $request->pen_stroke;
+        $data_ss->{"sand_save_hole_$lubang"} = $request->ss;
+
+        $data_score->{"score_hole_$lubang"} = $request->total_stroke - $request->par_temp;
+
+        $data_str->save();
+        $data_pt->save();
+        $data_fwy->save();
+        $data_gir->save();
+        $data_ps->save();
+        $data_ss->save();
+        $data_score->save();
+    }
     /**
      * Remove the specified resource from storage.
      *
