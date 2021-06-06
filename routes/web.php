@@ -21,6 +21,9 @@ Route::resources([
 Route::resources([
   'admin/event' => 'Admin\EventController'
 ]);
+Route::resources([
+  'user/event' => 'User\EventController'
+]);
 Route::resources([  
   'user/score' => 'User\ScoreController'
 ]);
@@ -31,6 +34,8 @@ Route::get('admin/event/{event_code}/manage_participant', 'Admin\EventController
 Route::get('admin/event/{event_code}/manage_score', 'Admin\EventController@manage_score');
 Route::post('admin/event/manage_participant', 'Admin\EventController@update_participant');
 Route::post('admin/event/update_score', 'Admin\EventController@update_score');
+// Route User
+Route::post('user/event/join_event', 'User\EventController@join_event');
 // <---------------------------- MY ROUTES ------------------------>
 
 
