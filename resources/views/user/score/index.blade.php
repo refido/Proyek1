@@ -13,6 +13,13 @@
 <!-- Examples -->
 <section id="card-demo-example">
     <div class="row match-height">
+        <?php 
+            use Carbon\Carbon;
+            if(@empty($check)){?>
+        <div class="col-md-12 col-12 text-center">
+            <p>You haven't join any event yet.</p>
+        </div>
+        <?php } ?>
         @foreach ($data as $item)
         <?php
         $url=null;
@@ -37,14 +44,11 @@
                     <?php if($item->status=='open'){ ?>
                     <h4 class="card-title">Event has not started yet</h4>
                     <?php }else if($item->status=='inprogress'){ ?>
-                    <a href="/user/score/{{$item->score_code}}/edit" class="btn btn-success"><i
-                            data-feather='dribbble'></i> My Score</a>
-                    <a href="/user/score/leaderboard/{{$item->event_code}}" class="btn btn-primary"><i
-                            data-feather='award'></i> Rankings</a>
+                    <a href="/user/score/{{$item->score_code}}/edit" class="btn btn-success"><i data-feather='dribbble'></i> My Score</a>
+                    <a href="/user/score/leaderboard/{{$item->event_code}}" class="btn btn-primary"><i data-feather='award'></i> Rankings</a>
                     {{-- <a href="/user/score/{{$item->score_id}}/edit" class="btn btn-primary">Leaderboard</a> --}}
                     <?php }else if($item->status=='finished'){ ?>
-                    <a href="/user/score/leaderboard/{{$item->event_code}}" class="btn btn-primary"><i
-                            data-feather='award'></i> Rankings</a>
+                    <a href="/user/score/leaderboard/{{$item->event_code}}" class="btn btn-primary"><i data-feather='award'></i> Rankings</a>
                     <?php } ?>
                 </div>
             </div>
