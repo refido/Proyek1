@@ -8,7 +8,7 @@ use App\Score;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class ScoreController extends Controller
+class ScoreController extends UserController
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class ScoreController extends Controller
             ->where('scores.join_status', '=', 'accepted')
             // ID MIDDLEWWARE USER
             //SOALNYA BELUM ADA AUTH
-            // ->where('scores.user_id', '=', Auth::id())
+            ->where('scores.user_id', '=', Auth::id())
             ->first();
 
         $data = DB::table('scores')
@@ -31,8 +31,7 @@ class ScoreController extends Controller
             ->where('scores.join_status', '=', 'accepted')
             // ID MIDDLEWWARE USER
             //SOALNYA BELUM ADA AUTH
-            // ->where('scores.user_id', '=', Auth::id())
-            // ->where('scores.user_id', '=', Auth::id())
+            ->where('scores.user_id', '=', Auth::id())
             ->orderByDesc('scores.id')
             ->get();
 
