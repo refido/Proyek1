@@ -167,7 +167,33 @@ class ScoreController extends Controller
     {
         //
     }
+    public function show_leaderboard(Request $request)
+    {
 
+        $data = DB::table('events')
+            ->select(
+                'events.event_code',
+                'events.hole_type',
+                'events.event_name',
+                'events.kick_off',
+                'fields.field_name',
+                'pars.*'
+            )
+            // FIELD DETAILD
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->where('events.event_code', '=', $request->event_code)
+            ->first();
+        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Leaderboard"]];
+        // dd($data);
+       
+        // dd($tot_par);
+
+        return view('/user/score/leaderboard', [
+            'breadcrumbs' => $breadcrumbs,
+            
+        ]);
+    }
     /**
      * Display the specified resource.
      *
