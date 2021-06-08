@@ -12,7 +12,7 @@ use App\Http\Controllers\LanguageController;
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 // <---------------------------- MY ROUTES ------------------------>
 Route::resources([
@@ -35,6 +35,10 @@ Route::get('admin/event/{event_code}/manage_score', 'Admin\EventController@manag
 Route::post('admin/event/manage_participant', 'Admin\EventController@update_participant');
 Route::post('admin/event/update_score', 'Admin\EventController@update_score');
 // Route User
+Route::post('user/score/update_score', 'User\ScoreController@update_score');
+Route::post('user/score/calculate_score', 'User\ScoreController@calculate_score');
+
+Route::post('user/score/get_score', 'User\ScoreController@get_score');
 Route::post('user/event/join_event', 'User\EventController@join_event');
 // <---------------------------- MY ROUTES ------------------------>
 
