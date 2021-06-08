@@ -186,12 +186,29 @@ class ScoreController extends Controller
             ->first();
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Leaderboard"]];
         // dd($data);
-       
+        $tot_par = 0;
+        $start = 0;
+        $end = 0;
+        if ($data->hole_type == 18) {
+            $start = 1;
+            $end = 18;
+        } else if ($data->hole_type == 19) {
+            $start = 1;
+            $end = 9;
+        } else if ($data->hole_type == 1018) {
+            $start = 10;
+            $end = 18;
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $tot_par += $data->{"hole_$i"};
+        }
         // dd($tot_par);
 
         return view('/user/score/leaderboard', [
             'breadcrumbs' => $breadcrumbs,
-            
+            'data' => $data,
+            'tot_par' => $tot_par
         ]);
     }
     /**
