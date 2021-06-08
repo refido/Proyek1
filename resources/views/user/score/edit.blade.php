@@ -17,7 +17,7 @@
     <div class="col-12">
         <div class="card text-center">
             <div class="card-header text-center" style="display: block;">
-                <h2>Senayan Jakarta</h2>
+                <h2>{{$data->field_name}}</h2>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -51,7 +51,8 @@
                                 <input type="hidden" id="{{$i}}" value="{{ $data->{"hole_$i"} }}">
                                 <h1 class="display-5">{{ $data->{"hole_$i"} }}</h1>
                             </td>
-                            <td id="skor_show_{{$i}}" class="popup-skor" onclick="click_skor()">
+                            <td id="skor_show_{{$i}}" class="popup-skor"
+                                onclick="click_skor({{$data->score_id}},{{$i}},{{ $data->{"hole_$i"} }})">
                                 <h1 class="display-5">
                                     <?php if($data->{"score_hole_$i"}>0){ echo '+';} ?>{{ $data->{"score_hole_$i"} }}
                                 </h1>
@@ -62,9 +63,23 @@
                     <input name="hole_type" id="hole_type2" value="" type="hidden">
 
                     <tfoot>
-                        <form method="POST" id="formKu" autocomplete="off" action="" enctype="multipart/form-data">
+                        <form method="POST" id="formKu" autocomplete="off" action="/user/score/calculate_score"
+                            enctype="multipart/form-data">
                             @csrf
-
+                            <tr>
+                                <td colspan="3">
+                                    @if (!empty($data->score_evidence))
+                                    <h6>You can still changes the evidence.</h6>
+                                    @endif
+                                    <div class="custom-file">
+                                        <input value="{{$data->event_code}}" name="event_code" type="hidden">
+                                        <input value="{{$data->score_code}}" name="score_code" type="hidden">
+                                        <input type="file" name="file" <?php  if(empty($data->score_evidence)) echo  'required';
+                                        ?> class="custom-file-input" name="image" id="imgInp" />
+                                        <label class="custom-file-label" for="customFile">Choose Evidence</label>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="3">
                                     <button class="btn btn-primary btn-block waves-effect" type="submit">Calculate My
