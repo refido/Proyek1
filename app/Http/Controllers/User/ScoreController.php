@@ -43,7 +43,110 @@ class ScoreController extends Controller
             'check' => $check
         ]);
     }
+    public function calculate_score(Request $request)
+    {
+        $data_score =  \App\Score::where('score_code', $request->score_code)->first();
+        // Create leaderboard after accepted by admin *not yet
+        $leaderboard =  \App\Leaderboard::where('score_code', $request->score_code)->first();
+        // dd($leaderboard);
 
+        $waktu = date('ymdhis');
+        $file = $request->file('file');
+        if (!empty($file)) {
+            if (!empty($data_score->score_evidence)) {
+                Storage::disk('public')->delete('scoreImages/' . $data_score->score_evidence);
+            }
+            $name_file = $waktu . '_' . $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs(
+                'scoreImages',
+                $name_file,
+                'public'
+            );
+            $data_score->score_evidence = @$name_file;
+            $data_score->save();
+        }
+
+        // AMBIL DATA SKOR U KALKULASI
+        $ambil = DB::table('scores')
+            ->select(
+                'scores.id as score_id',
+                'scores.*',
+                'strokes.*',
+                'putts.*',
+                'pen_strokes.*',
+                'girs.*',
+                'fwies.*',
+                'sand_saves.*',
+                'events.hole_type',
+                'fields.*',
+                'pars.*'
+            )
+            ->join('strokes', 'strokes.score_id', '=', 'scores.id')
+            ->join('putts', 'putts.score_id', '=', 'scores.id')
+            ->join('pen_strokes', 'pen_strokes.score_id', '=', 'scores.id')
+            ->join('girs', 'girs.score_id', '=', 'scores.id')
+            ->join('fwies', 'fwies.score_id', '=', 'scores.id')
+            ->join('sand_saves', 'sand_saves.score_id', '=', 'scores.id')
+            // FIELD DETAILD
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->where('scores.score_code', '=', $request->score_code)
+            ->orderByDesc('scores.id')
+            ->first();
+
+
+        // AMBIL DATA SKOR U KALKULASI
+        $start = 0;
+        $end = 0;
+        $tot_strokes_temp = 0;
+        $gir_temp = 0;
+        $fwh_temp = 0;
+        $putts_temp = 0;
+        $check_fwh = 0;
+
+        if ($ambil->hole_type == 18) {
+            $start = 1;
+            $end = 18;
+        } else if ($ambil->hole_type == 19) {
+            $start = 1;
+            $end = 9;
+        } else if ($ambil->hole_type == 1018) {
+            $start = 10;
+            $end = 18;
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $tot_strokes_temp += $ambil->{"strokes_hole_$i"};
+            $gir_temp += $ambil->{"gir_hole_$i"};
+            $putts_temp += $ambil->{"putt_hole_$i"};
+            if (is_null($ambil->{"fwies_hole_$i"}) == false) {
+                $fwh_temp += $ambil->{"fwies_hole_$i"};
+                $check_fwh += 1;
+            }
+        }
+
+        $gir_temp =  ($gir_temp / $end) * 100;
+
+        $fwh_temp = ($fwh_temp / $check_fwh) * 100;
+        $putts_temp = $putts_temp / 9;
+
+        // $leaderboard->status = 'waiting';
+        $leaderboard->tot_strokes = $tot_strokes_temp;
+        $leaderboard->gir = round($gir_temp, 2);
+        $leaderboard->fwh = round($fwh_temp, 2);
+        $leaderboard->putts = round($putts_temp, 2);
+
+
+        $leaderboard->save();
+
+        $notification = array(
+            'message' => 'Update Score Success!',
+            'alert-type' => 'success'
+        );
+
+        return redirect('/user/score')->with($notification);
+    }
     /**
      * Show the form for creating a new resource.
      *
