@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
+
+use App\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
 use Auth;
 
 class LoginController extends Controller
@@ -30,41 +29,47 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
 
-    // Login
-    public function showLoginForm()
+    public function showAdminLoginForm()
     {
         $pageConfigs = [
             'bodyClass' => "bg-full-screen-image",
             'blankPage' => true
         ];
 
-        return view('/auth/login', [
-            'pageConfigs' => $pageConfigs
-        ]);
+        return view('auth-admin.login', ['pageConfigs' => $pageConfigs]);
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function adminLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:4'
+        ]);
+
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+
+            return redirect()->intended('/admin');
+        }
+        return back()->withInput($request->only('email', 'remember'));
+    }
     public function logout()
     {
-        Auth::guard()->logout();
+        Auth::guard('admin')->logout();
 
-        return redirect('/');
+        return redirect('/admin');
     }
 }

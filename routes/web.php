@@ -29,15 +29,20 @@ Route::resources([
 ]);
 Route::post('user/score/update_score', 'User\ScoreController@update_score');
 // Route Admin
+Route::post('/admin/login', 'Admin\LoginController@adminLogin');
+Route::get('/admin/logout', 'Admin\LoginController@logout')->name('admin-logout');
+Route::get('/admin/login', 'Admin\LoginController@showAdminLoginForm')->name('admin-login');
+
 Route::get('admin/event/{score_code}/detail_score', 'Admin\EventController@detail_score');
 Route::get('admin/event/{event_code}/manage_participant', 'Admin\EventController@manage_participant');
 Route::get('admin/event/{event_code}/manage_score', 'Admin\EventController@manage_score');
 Route::post('admin/event/manage_participant', 'Admin\EventController@update_participant');
 Route::post('admin/event/update_score', 'Admin\EventController@update_score');
 // Route User
+Route::get('/user/logout', 'Auth\LoginController@logout')->name('user-logout1');
+
 Route::post('user/score/update_score', 'User\ScoreController@update_score');
 Route::post('user/score/calculate_score', 'User\ScoreController@calculate_score');
-
 Route::post('user/score/get_score', 'User\ScoreController@get_score');
 Route::post('user/event/join_event', 'User\EventController@join_event');
 // <---------------------------- MY ROUTES ------------------------>
