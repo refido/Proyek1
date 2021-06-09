@@ -87,7 +87,11 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        //
+        $breadcrumbs = [['link' => "/admin", 'name' => "Home"], ['link' => "/admin/field", 'name' => "Field"], ['name' => "Detail"]];
+        return view('/admin/field/show', [
+            'breadcrumbs' => $breadcrumbs,
+            'data' => $field
+        ]);
     }
 
     /**
@@ -98,7 +102,11 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        //
+        $breadcrumbs = [['link' => "/admin", 'name' => "Home"], ['link' => "/admin/field", 'name' => "Field"], ['name' => "Edit"]];
+        return view('/admin/field/edit', [
+            'breadcrumbs' => $breadcrumbs,
+            'data' => $field
+        ]);
     }
 
     /**
@@ -110,7 +118,37 @@ class FieldController extends Controller
      */
     public function update(Request $request, Field $field)
     {
-        //
+        $bawa = Field::find($field)->first();
+
+        $file = $request->file('image');
+        if (!empty($file)) {
+            Storage::disk('public')->delete('masterImages/' . $bawa->image);
+            $waktu = date('ymdhis');
+
+            $name_file = $waktu . '_' . $request->file('image')->getClientOriginalName();
+            $bawa->image = $name_file;
+            $request->file('image')->storeAs(
+                'masterImages',
+                $name_file,
+                'public'
+            );
+        }
+        $bawa->field_name = $request->field_name;
+        $bawa->address = $request->address;
+        $bawa->save();
+
+        $data_par = \App\Par::where('field_code', $request->field_code)->first();
+        //Hole input
+        for ($i = 1; $i <= 18; $i++) {
+            $data_par->{"hole_" . $i} = $request->{"hole_" . $i};
+        }
+        $data_par->save();
+
+        $notification = array(
+            'message' => 'Update Field Success!',
+            'alert-type' => 'success'
+        );
+        return redirect('/admin/field')->with($notification);
     }
 
     /**

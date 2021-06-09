@@ -18,7 +18,7 @@
           <h2 class="brand-text text-primary ml-1">J-Golf</h2>
         </a>
 
-        <h4 class="card-title mb-1">Welcome to J-Golf Indonesia! 👋</h4>
+        <h4 class="card-title mb-1">Welcome to Perhitungan Skor Golf! 👋</h4>
         <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
 
         <form class="auth-login-form mt-2" method="POST" action="{{ route('login') }}">
