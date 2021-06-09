@@ -27,7 +27,6 @@ Route::resources([
 Route::resources([  
   'user/score' => 'User\ScoreController'
 ]);
-Route::post('user/score/update_score', 'User\ScoreController@update_score');
 // Route Admin
 Route::post('/admin/login', 'Admin\LoginController@adminLogin');
 Route::get('/admin/logout', 'Admin\LoginController@logout')->name('admin-logout');

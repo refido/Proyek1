@@ -229,6 +229,38 @@ class ScoreController extends UserController
      */
     public function edit(Score $score)
     {
+        // dd($score->id);
+        // Check sudah pernah insert belom
+        $check = \App\Stroke::where('score_id', $score->id)->first();
+        // GUNAKAN CODE AGAR GAK DI HACK
+        if (@empty($check)) {
+            $status = \App\Score::where('id', $score->id)->first();
+
+            $data_str = new \App\Stroke;
+            $data_pt = new \App\Putt;
+            $data_fwy = new \App\Fwy;
+            $data_gir = new \App\Gir;
+            $data_ps = new \App\PenStroke;
+            $data_ss = new \App\SandSave;
+
+            $data_str->score_id = $score->id;
+            $data_pt->score_id = $score->id;
+            $data_fwy->score_id = $score->id;
+            $data_gir->score_id = $score->id;
+            $data_ps->score_id = $score->id;
+            $data_ss->score_id = $score->id;
+
+            $status->score_status = 'waiting';
+
+            $data_str->save();
+            $data_pt->save();
+            $data_fwy->save();
+            $data_gir->save();
+            $data_ps->save();
+            $data_ss->save();
+
+            $status->save();
+        }
         $data = DB::table('scores')
             ->select(
                 'scores.id as score_id',
@@ -256,6 +288,12 @@ class ScoreController extends UserController
             ->where('scores.score_code', '=', $score->score_code)
             ->orderByDesc('scores.id')
             ->first();
+        // dd($data);
+        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
+        return view('/user/score/edit', [
+            'breadcrumbs' => $breadcrumbs,
+            'data' => $data,
+        ]);
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['name' => "Update Score"]];
         return view('/user/score/edit', [
             'breadcrumbs' => $breadcrumbs,
@@ -312,5 +350,47 @@ class ScoreController extends UserController
     public function destroy($id)
     {
         //
+    }
+    public function get_score(Request $request)
+    {
+        $get_data = DB::table('scores')
+            ->select(
+                'scores.id as score_id',
+                'scores.*',
+                'strokes.*',
+                'putts.*',
+                'pen_strokes.*',
+                'girs.*',
+                'fwies.*',
+                'sand_saves.*',
+                'events.hole_type',
+                'fields.*',
+                'pars.*'
+            )
+            ->join('strokes', 'strokes.score_id', '=', 'scores.id')
+            ->join('putts', 'putts.score_id', '=', 'scores.id')
+            ->join('pen_strokes', 'pen_strokes.score_id', '=', 'scores.id')
+            ->join('girs', 'girs.score_id', '=', 'scores.id')
+            ->join('fwies', 'fwies.score_id', '=', 'scores.id')
+            ->join('sand_saves', 'sand_saves.score_id', '=', 'scores.id')
+            // FIELD DETAILD
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->where('scores.id', '=', $request->score_id)
+            ->orderByDesc('scores.id')
+            ->first();
+
+        $object = new \stdClass();
+
+        $object->fwies = $get_data->{"fwies_hole_$request->hole_temp"};
+        $object->gir = $get_data->{"gir_hole_$request->hole_temp"};
+        $object->sand_save = $get_data->{"sand_save_hole_$request->hole_temp"};
+
+        $object->pen_stroke = $get_data->{"pen_stroke_hole_$request->hole_temp"};
+        $object->putt = $get_data->{"putt_hole_$request->hole_temp"};
+        $object->strokes = $get_data->{"strokes_hole_$request->hole_temp"};
+
+        echo json_encode($object);
     }
 }
