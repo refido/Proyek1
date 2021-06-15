@@ -1,0 +1,150 @@
+@extends('layouts/contentLayoutMaster')
+
+@section('title', 'Detailed Player')
+
+@section('vendor-style')
+<link rel="stylesheet" href="{{asset(mix('vendors/css/tables/datatable/dataTables.bootstrap4.min.css'))}}">
+<link rel="stylesheet" href="{{asset(mix('vendors/css/tables/datatable/responsive.bootstrap4.min.css'))}}">
+<link rel="stylesheet" href="{{asset(mix('vendors/css/tables/datatable/buttons.bootstrap4.min.css'))}}">
+@endsection
+@section('page-style')
+{{-- Page Css files --}}
+<link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-invoice-list.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-user.css')) }}">
+<style>
+    .div-ku {
+        width: 15px;
+        border-radius: 2px;
+        height: 15px;
+        float: left;
+        margin-top: 2px;
+        margin-right: 4px;
+    }
+</style>
+@endsection
+
+@section('content')
+<section class="app-user-view">
+    <!-- User Card & Plan Starts -->
+    <div class="row">
+        <!-- User Card starts-->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+            <div class="card user-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                            <div class="user-avatar-section">
+                                <div class="d-flex justify-content-start">
+                                    <?php 
+                  if(empty($get_data->image)){
+                  $url1='storage/coreImages/user.png';
+                  }else{
+                      $url1='storage/profileImages/'.$get_data->image;
+                  }
+                 
+                   ?>
+                                    <img class="img-fluid rounded" src="{{asset($url1)}}" height="104" width="104"
+                                        alt="User avatar" />
+                                    <div class="d-flex flex-column ml-1" style="margin-top:35px">
+                                        <div class="user-info mb-1">
+                                            <h4 class="mb-0">{{$get_data->name}}</h4>
+                                            <?php if(!empty($get_data->birth_date)){ 
+                         $dateOfBirth = $get_data->birth_date;
+                         $today = date("Y-m-d");
+                         $diff = date_diff(date_create($dateOfBirth), date_create($today));
+                        ?>
+                                            <span class="card-text">{{$diff->format('%y')}} years old</span><br>
+                                            <?php }?>
+                                            <?php if(!empty($get_data->gender)){ ?>
+                                            <span class="card-text">{{$get_data->gender}}</span><br>
+                                            <?php }?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center user-total-numbers">
+                                <div class="d-flex align-items-center mr-2">
+                                    <div class="color-box bg-light-primary">
+                                        <i data-feather='award'></i>
+                                    </div>
+                                    <div class="ml-1">
+                                        <h5 class="mb-0">{{$get_data->event_name}}</h5>
+                                        <small>Event Name</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="color-box bg-light-success">
+                                        <i data-feather='airplay'></i>
+                                    </div>
+                                    <div class="ml-1">
+                                        <h5 class="mb-0">{{$get_data->field_name}}</h5>
+                                        <small>Golf Course</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+              $collection = \App\Leaderboard::where('leaderboards.score_code',$get_data->score_code)->first();
+              ?>
+                        </div>
+                        <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0">
+                            <div class="user-info-wrapper">
+                                <div class="d-flex flex-wrap">
+                                    <div class="user-info-title">
+                                        <i data-feather="minus" class="mr-1"></i>
+                                        <span class="card-text user-info-title font-weight-bold mb-0">To Par</span>
+                                    </div>
+                                    <p class="card-text mb-0">
+                                        <?php if(($collection->tot_strokes - $tot_par)>0){ echo "+";}?>{{ ($collection->tot_strokes -$tot_par)}}
+                                    </p>
+                                </div>
+                                <div class="d-flex flex-wrap my-50">
+                                    <div class="user-info-title">
+                                        <i data-feather="check" class="mr-1"></i>
+                                        <span class="card-text user-info-title font-weight-bold mb-0">Green in R.</span>
+                                    </div>
+                                    <p class="card-text mb-0">{{$collection->gir}}%</p>
+                                </div>
+                                <div class="d-flex flex-wrap my-50">
+                                    <div class="user-info-title">
+                                        <i data-feather="star" class="mr-1"></i>
+                                        <span class="card-text user-info-title font-weight-bold mb-0">Fairway Hit</span>
+                                    </div>
+                                    <p class="card-text mb-0">{{$collection->fwh}}%</p>
+                                </div>
+                                <div class="d-flex flex-wrap my-50">
+                                    <div class="user-info-title">
+                                        <i data-feather="flag" class="mr-1"></i>
+                                        <span class="card-text user-info-title font-weight-bold mb-0">Putts</span>
+                                    </div>
+                                    <p class="card-text mb-0">{{$collection->putts}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /User Card Ends-->
+
+        <!-- Plan Card starts-->
+        <!-- /Plan CardEnds -->
+    </div>
+    <!-- User Card & Plan Ends -->
+   
+    <!-- /User Invoice Ends-->
+</section>
+@endsection
+
+@section('vendor-script')
+<script src="{{asset(mix('vendors/js/extensions/moment.min.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js'))}}"></script>
+<script src="{{asset(mix('vendors/js/tables/datatable/buttons.bootstrap4.min.js'))}}"></script>
+@endsection
+@section('page-script')
+{{-- Page js files --}}
+<script src="{{ asset(mix('js/scripts/pages/app-user-view.js')) }}"></script>
+@endsection

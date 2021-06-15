@@ -42,6 +42,66 @@ class ScoreController extends UserController
             'check' => $check
         ]);
     }
+    public function detailed_player(Request $request)
+    {
+
+        $get_data = DB::table('scores')
+            ->select(
+                'scores.id as score_id',
+                'scores.*',
+                'strokes.*',
+                'putts.*',
+                'pen_strokes.*',
+                'girs.*',
+                'fwies.*',
+                'sand_saves.*',
+                'events.hole_type',
+                'events.event_name',
+                'fields.field_name',
+                'pars.*',
+                'users.*'
+            )
+            ->join('strokes', 'strokes.score_id', '=', 'scores.id')
+            ->join('putts', 'putts.score_id', '=', 'scores.id')
+            ->join('pen_strokes', 'pen_strokes.score_id', '=', 'scores.id')
+            ->join('girs', 'girs.score_id', '=', 'scores.id')
+            ->join('fwies', 'fwies.score_id', '=', 'scores.id')
+            ->join('sand_saves', 'sand_saves.score_id', '=', 'scores.id')
+            // FIELD DETAILD
+            ->join('events', 'events.event_code', '=', 'scores.event_code')
+            ->join('fields', 'fields.id', '=', 'events.field_id')
+            ->join('pars', 'pars.field_code', '=', 'fields.field_code')
+            ->join('users', 'users.id', '=', 'scores.user_id')
+            ->where('scores.score_code', '=', $request->score_code)
+            ->first();
+
+        $tot_par = 0;
+        $start = 0;
+        $end = 0;
+        if ($get_data->hole_type == 18) {
+            $start = 1;
+            $end = 18;
+        } else if ($get_data->hole_type == 19) {
+            $start = 1;
+            $end = 9;
+        } else if ($get_data->hole_type == 1018) {
+            $start = 10;
+            $end = 18;
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $tot_par += $get_data->{"hole_$i"};
+        }
+
+        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "/user/score", 'name' => "Score"], ['link' => "/user/score/leaderboard/" . $get_data->event_code, 'name' => "Leaderboard"], ['name' => "Detailed Player"]];
+        return view('/user/score/detailed_player', [
+            'breadcrumbs' => $breadcrumbs,
+            'get_data' => $get_data,
+            'tot_par' => $tot_par,
+            'start' => $start,
+            'end' => $end
+        ]);
+    }
     public function calculate_score(Request $request)
     {
         $data_score =  \App\Score::where('score_code', $request->score_code)->first();
