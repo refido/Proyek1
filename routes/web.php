@@ -44,6 +44,9 @@ Route::post('user/score/update_score', 'User\ScoreController@update_score');
 Route::post('user/score/calculate_score', 'User\ScoreController@calculate_score');
 Route::post('user/score/get_score', 'User\ScoreController@get_score');
 Route::post('user/event/join_event', 'User\EventController@join_event');
+
+Route::get('user/score/leaderboard/{event_code}', 'User\ScoreController@show_leaderboard');
+Route::get('user/score/detailed_player/{score_code}', 'User\ScoreController@detailed_player');
 // <---------------------------- MY ROUTES ------------------------>
 
 
