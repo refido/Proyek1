@@ -28,6 +28,7 @@ Route::resources([
   'user/score' => 'User\ScoreController'
 ]);
 // Route Admin
+Route::get('/admin', 'Admin\HomeController@index');
 Route::post('/admin/login', 'Admin\LoginController@adminLogin');
 Route::get('/admin/logout', 'Admin\LoginController@logout')->name('admin-logout');
 Route::get('/admin/login', 'Admin\LoginController@showAdminLoginForm')->name('admin-login');
