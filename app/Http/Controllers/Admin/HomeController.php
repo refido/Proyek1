@@ -10,6 +10,7 @@ class HomeController extends AdminController
     public function index()
     {
         $pageConfigs = ['pageHeader' => false];
-        return view('/admin/dashboard', ['pageConfigs' => $pageConfigs]);
+
+        return view('/content/dashboard/dashboard-ecommerce', ['pageConfigs' => $pageConfigs]);
     }
 }
