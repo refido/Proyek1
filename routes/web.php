@@ -51,7 +51,7 @@ Route::get('user/score/detailed_player/{score_code}', 'User\ScoreController@deta
 
 
 // Main Page Route
-Route::get('/', 'DashboardController@dashboardEcommerce')->name('dashboard-ecommerce');
+Route::get('/', 'User\HomeController@index');
 
 /* Route Dashboards */
 Route::group(['prefix' => 'dashboard'], function () {
