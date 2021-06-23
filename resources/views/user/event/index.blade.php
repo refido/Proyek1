@@ -62,7 +62,7 @@
                         </div>
                         <div class="media-body">
                             <small class="text-muted mr-25">by</small>
-                            <small><a href="#" class="text-body">J-Golf Indonesia</a></small>
+                            <small><a href="#" class="text-body">Admin PSG</a></small>
                             <span class="text-muted ml-50 mr-25">|</span>
                             <small
                                 class="text-muted">{{ Carbon\Carbon::parse($item->created_at)->isoFormat('LL') }}</small>
