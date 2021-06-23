@@ -37,7 +37,7 @@
                             </g>
                         </g>
                     </svg>
-                    <h2 class="brand-text text-primary ml-1">J-Golf</h2>
+                    <h2 class="brand-text text-primary ml-1">PSG</h2>
                 </a>
 
                 <h4 class="card-title mb-1">Welcome to Administator! 👋</h4>
@@ -74,6 +74,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
                 </form>
+                <br>
+                <form action="{{ route('user-login') }}">
+                <button type="submit" class="btn btn-warning btn-block" tabindex="4">Go to User</button>
+                </form>
+
 
                 {{-- <p class="text-center mt-2">
           <span>New on our platform?</span>
