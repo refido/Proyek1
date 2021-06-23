@@ -52,7 +52,7 @@ Route::get('user/score/detailed_player/{score_code}', 'User\ScoreController@deta
 
 
 // Main Page Route
-Route::get('/', 'User\HomeController@index');
+Route::get('/', 'User\HomeController@index')->name('user-login');
 
 /* Route Dashboards */
 Route::group(['prefix' => 'dashboard'], function () {
