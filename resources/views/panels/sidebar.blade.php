@@ -11,7 +11,7 @@ $configData = Helper::applClasses();
           <span class="brand-logo">
            <img src="{{asset('storage/coreImages/logoflat.png')}}" alt="">
           </span>
-          <h2 class="brand-text">J-Golf</h2>
+          <h2 class="brand-text">PSG</h2>
         </a>
       </li>
       <li class="nav-item nav-toggle">
