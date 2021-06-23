@@ -45,7 +45,7 @@ if (@empty($data->poster)) {
                         </div>
                         <div class="media-body">
                             <small class="text-muted mr-25">by</small>
-                            <small><a href="javascript:void(0);" class="text-body">PSG - Indonesia</a></small>
+                            <small><a href="javascript:void(0);" class="text-body">Admin PSG</a></small>
                             <span class="text-muted ml-50 mr-25">|</span>
                             <small class="text-muted">{{ Carbon::parse($data->created_at)->isoFormat('LLLL') }}</small>
                         </div>
